@@ -6,22 +6,8 @@ import { useInventory } from '@/contexts/InventoryContext';
 import { ShoppingCart, Package, AlertTriangle, TrendingUp } from 'lucide-react';
 import { Transaction } from '@/types';
 
-// Custom Peso Icon Component
-const PesoIcon: React.FC<{ className?: string }> = ({ className }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-  >
-    <path d="M5 9h14M5 13h10" />
-    <path d="M7 4v16M7 4h6a4 4 0 0 1 0 8H7" />
-  </svg>
-);
+// Peso symbol icon (Lucide doesn’t have PHP, so we’ll use text instead)
+import { CircleDollarSign } from 'lucide-react'; // Optional if you want a replacement icon
 
 const Dashboard: React.FC = () => {
   const { products, getLowStockProducts } = useInventory();
@@ -40,7 +26,7 @@ const Dashboard: React.FC = () => {
 
       const today = new Date().toDateString();
       const todayTransactions = allTransactions.filter(
-        t => new Date(t.date).toDateString() === today
+        (t) => new Date(t.date).toDateString() === today
       );
 
       const todaySales = todayTransactions.reduce((sum, t) => sum + t.total, 0);
@@ -70,7 +56,7 @@ const Dashboard: React.FC = () => {
       title: "Today's Sales",
       value: formatCurrency(stats.todaySales),
       description: `${stats.todayTransactions} transactions`,
-      icon: PesoIcon,
+      icon: () => <span className="text-success font-bold text-lg">₱</span>, // Peso sign icon
       color: 'text-success',
     },
     {
@@ -115,7 +101,11 @@ const Dashboard: React.FC = () => {
                 <CardTitle className="text-sm font-medium text-muted-foreground">
                   {stat.title}
                 </CardTitle>
-                <stat.icon className={`w-5 h-5 ${stat.color}`} />
+                {typeof stat.icon === 'function' ? (
+                  <div className="w-5 h-5 flex items-center justify-center">{stat.icon()}</div>
+                ) : (
+                  <stat.icon className={`w-5 h-5 ${stat.color}`} />
+                )}
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-foreground">{stat.value}</div>

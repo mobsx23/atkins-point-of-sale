@@ -41,7 +41,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <div className="flex h-screen bg-background">
       {/* Sidebar */}
       <aside className="w-64 bg-sidebar border-r border-sidebar-border flex flex-col">
-        {/* Logo */}
+        {/* Logo Section */}
         <div className="p-6 border-b border-sidebar-border">
           <Link to="/dashboard" className="flex items-center gap-3">
             <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
@@ -54,8 +54,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           </Link>
         </div>
 
-        {/* Navigation */}
-        <nav className="flex-1 p-4 space-y-1">
+        {/* Navigation Links */}
+        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
           {navItems.map(({ path, icon: Icon, label }) => (
             <Link
               key={path}
@@ -73,26 +73,28 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           ))}
         </nav>
 
-        {/* User & Logout */}
-        <div className="p-4 border-t border-sidebar-border">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                <span className="text-xs font-bold text-primary-foreground">
-                  {user?.name.charAt(0)}
-                </span>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-sidebar-foreground">{user?.name}</p>
-                <p className="text-xs text-sidebar-foreground/60">{user?.role}</p>
-              </div>
+        {/* User Info & Logout Section */}
+        <div className="p-4 border-t border-sidebar-border bg-sidebar/50 backdrop-blur-sm">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+              <span className="text-xs font-bold text-primary-foreground">
+                {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
+              </span>
+            </div>
+            <div>
+              <p className="text-sm font-medium text-sidebar-foreground">
+                {user?.name || 'Store Admin'}
+              </p>
+              <p className="text-xs text-sidebar-foreground/60">{user?.role || 'admin'}</p>
             </div>
           </div>
+
+          {/* ✅ Fixed Logout Button */}
           <Button
-            variant="outline"
+            variant="ghost"
             size="sm"
             onClick={handleLogout}
-            className="w-full justify-start gap-2 bg-sidebar-accent/50 border-sidebar-foreground/20 text-sidebar-foreground hover:bg-sidebar-accent hover:border-sidebar-foreground/30"
+            className="w-full justify-start gap-2 text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors"
           >
             <LogOut className="w-4 h-4" />
             Logout
