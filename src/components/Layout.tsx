@@ -92,7 +92,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             variant="outline"
             size="sm"
             onClick={handleLogout}
-            className="w-full justify-start gap-2 border-sidebar-border text-sidebar-foreground hover:bg-sidebar-accent"
+            className="w-full justify-start gap-2 bg-sidebar-accent/50 border-sidebar-foreground/20 text-sidebar-foreground hover:bg-sidebar-accent hover:border-sidebar-foreground/30"
           >
             <LogOut className="w-4 h-4" />
             Logout
