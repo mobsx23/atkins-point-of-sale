@@ -20,7 +20,7 @@ const POS: React.FC = () => {
   const [showReceipt, setShowReceipt] = useState(false);
 
   const filteredProducts = products.filter(
-    p =>
+    (p) =>
       p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       p.brand.toLowerCase().includes(searchQuery.toLowerCase()) ||
       p.category.toLowerCase().includes(searchQuery.toLowerCase())
@@ -88,20 +88,20 @@ const POS: React.FC = () => {
                       <h3 className="font-semibold text-foreground">{product.name}</h3>
                       <p className="text-sm text-muted-foreground">{product.brand}</p>
                     </div>
-                    <Badge className={getCategoryColor(product.category)}>
-                      {product.category}
-                    </Badge>
+                    <Badge className={getCategoryColor(product.category)}>{product.category}</Badge>
                   </div>
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-xl font-bold text-primary">{formatCurrency(product.price)}</p>
                       <p className="text-xs text-muted-foreground">Stock: {product.stock}</p>
                     </div>
+
+                    {/* 🟡 Updated Add Button (Yellow Design) */}
                     <Button
                       size="sm"
                       onClick={() => addToCart(product)}
                       disabled={product.stock === 0}
-                      className="gap-2"
+                      className="gap-2 bg-[hsl(45_100%_52%)] text-[hsl(222_25%_12%)] font-semibold hover:bg-[hsl(45_100%_47%)] shadow-sm transition-colors duration-200"
                     >
                       <Plus className="w-4 h-4" />
                       Add
@@ -203,12 +203,7 @@ const POS: React.FC = () => {
                 <CreditCard className="w-5 h-5" />
                 Pay with GCash
               </Button>
-              <Button
-                variant="outline"
-                className="w-full"
-                onClick={clearCart}
-                disabled={cart.length === 0}
-              >
+              <Button variant="outline" className="w-full" onClick={clearCart} disabled={cart.length === 0}>
                 Clear Cart
               </Button>
             </div>
