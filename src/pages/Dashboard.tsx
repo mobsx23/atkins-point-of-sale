@@ -56,7 +56,7 @@ const Dashboard: React.FC = () => {
       title: "Today's Sales",
       value: formatCurrency(stats.todaySales),
       description: `${stats.todayTransactions} transactions`,
-      icon: () => <span className="text-success font-bold text-lg">₱</span>, // Peso sign icon
+      icon: (props: React.ComponentProps<'span'>) => <span {...props} className="text-success font-bold text-lg">₱</span>, // Peso sign icon
       color: 'text-success',
     },
     {
@@ -102,9 +102,9 @@ const Dashboard: React.FC = () => {
                   {stat.title}
                 </CardTitle>
                 {typeof stat.icon === 'function' ? (
-                  <div className="w-5 h-5 flex items-center justify-center">{stat.icon()}</div>
+                  <div className="w-5 h-5 flex items-center justify-center">{stat.icon({})}</div>
                 ) : (
-                  <stat.icon className={`w-5 h-5 ${stat.color}`} />
+                  React.createElement(stat.icon, { className: `w-5 h-5 ${stat.color}` })
                 )}
               </CardHeader>
               <CardContent>
