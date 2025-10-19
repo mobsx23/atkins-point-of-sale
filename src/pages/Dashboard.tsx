@@ -3,8 +3,25 @@ import Layout from '@/components/Layout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { getTransactions } from '@/lib/storage';
 import { useInventory } from '@/contexts/InventoryContext';
-import { DollarSign, ShoppingCart, Package, AlertTriangle, TrendingUp } from 'lucide-react';
+import { ShoppingCart, Package, AlertTriangle, TrendingUp } from 'lucide-react';
 import { Transaction } from '@/types';
+
+// Custom Peso Icon Component
+const PesoIcon: React.FC<{ className?: string }> = ({ className }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="M5 9h14M5 13h10" />
+    <path d="M7 4v16M7 4h6a4 4 0 0 1 0 8H7" />
+  </svg>
+);
 
 const Dashboard: React.FC = () => {
   const { products, getLowStockProducts } = useInventory();
@@ -53,7 +70,7 @@ const Dashboard: React.FC = () => {
       title: "Today's Sales",
       value: formatCurrency(stats.todaySales),
       description: `${stats.todayTransactions} transactions`,
-      icon: DollarSign,
+      icon: PesoIcon,
       color: 'text-success',
     },
     {
